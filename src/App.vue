@@ -17,7 +17,7 @@
 
     <div class="form__items">
       <div class="form__item">
-        <label for="" class="form__item-label">Name</label>
+        <label class="form__item-label">Name</label>
         <input
           type="text"
           class="form__item-input form__item-input--name"
@@ -25,7 +25,7 @@
         />
       </div>
       <div class="form__item">
-        <label for="" class="form__item-label">Email</label>
+        <label class="form__item-label">Email</label>
         <input
           type="text"
           class="form__item-input form__item-input--email"
@@ -33,7 +33,7 @@
         />
       </div>
       <div class="form__item">
-        <label for="" class="form__item-label">Phone Number</label>
+        <label class="form__item-label">Phone Number</label>
         <input
           type="text"
           class="form__item-input form__item-input--phone"
@@ -41,7 +41,7 @@
         />
       </div>
       <div class="form__item">
-        <label for="" class="form__item-label">Company</label>
+        <label class="form__item-label">Company</label>
         <input
           type="text"
           class="form__item-input form__item-input--company"
