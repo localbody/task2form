@@ -1,4 +1,18 @@
-<script setup></script>
+<script setup>
+import BaseButton from '@/components/UI/BaseButton.vue'
+
+const onClickSubmit = (event) => {
+  console.log('onClickSubmit')
+}
+
+const onClickNextStep = (event) => {
+  console.log('onClickNextStep')
+}
+
+const onClickPreviousStep = (event) => {
+  console.log('onClickPreviousStep')
+}
+</script>
 
 <template>
   <div class="container">
@@ -148,14 +162,16 @@
           quote in 24 - 48 hours.
         </h2>
 
-        <button class="button button--primary button--submit center">
-          Submit
-        </button>
+        <div class="wrapper-center">
+          <BaseButton @click="onClickSubmit">Submit</BaseButton>
+        </div>
       </div>
     </div>
     <div class="buttons">
-      <button class="button button--secondary">Previous step</button>
-      <button class="button button--primary">Next step</button>
+      <BaseButton variant="secondary" @click="onClickPreviousStep"
+        >Previous step</BaseButton
+      >
+      <BaseButton @click="onClickNextStep">Next step</BaseButton>
     </div>
   </div>
 </template>

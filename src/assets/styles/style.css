@@ -301,7 +301,6 @@ input[type='checkbox']:checked + label {
 
 .center {
   text-align: center;
-  margin: 0 auto;
 }
 
 .image-ok {
@@ -309,6 +308,8 @@ input[type='checkbox']:checked + label {
   margin-bottom: 16px;
 }
 
-.button--submit {
-  margin-top: 32px;
+.wrapper-center {
+  padding-top: 32px;
+  display: grid;
+  place-content: center;
 }
