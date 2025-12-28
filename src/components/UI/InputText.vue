@@ -1,0 +1,79 @@
+<script setup>
+const props = defineProps({
+  modelValue: String,
+
+  label: {
+    type: String,
+    default: '',
+  },
+  icon: {
+    type: String,
+    default: '',
+  },
+  placeholder: {
+    type: String,
+    default: '',
+  },
+})
+
+const emit = defineEmits(['update:modelValue'])
+</script>
+
+<template>
+  <div class="form__item">
+    <label class="form__item-label">{{ label }}</label>
+    <div :class="['form__item-input', `form__item-input--${icon}`]">
+      <input
+        type="text"
+        :placeholder="placeholder"
+        :value="modelValue"
+        @input="emit('update:modelValue', $event.target.value)"
+      />
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.form__item-input {
+  background-color: var(--neutral-color-100);
+  border: 1px solid var(--neutral-color-300);
+  box-shadow: 0px 2px 6px rgba(19, 18, 66, 0.07);
+  border-radius: 46px;
+  padding: 22px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form__item-input input[type='text'] {
+  border: none;
+  color: var(--neutral-color-600);
+  font-size: 18px;
+  line-height: 20px;
+  width: 100%;
+}
+
+.form__item-input::after {
+  content: '';
+  width: 28px;
+  height: 28px;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.form__item-input--name::after {
+  background-image: url(@/assets/icons/name.svg);
+}
+
+.form__item-input--email::after {
+  background-image: url(@/assets/icons/mail.svg);
+}
+
+.form__item-input--phone::after {
+  background-image: url(@/assets/icons/phone.svg);
+}
+
+.form__item-input--company::after {
+  background-image: url(@/assets/icons/company.svg);
+}
+</style>

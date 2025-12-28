@@ -1,16 +1,33 @@
 <script setup>
+import { ref } from 'vue'
 import BaseButton from '@/components/UI/BaseButton.vue'
+import InputText from '@/components/UI/InputText.vue'
+import InputCheckbox from '@/components/UI/InputCheckbox.vue'
+import InputRadio from '@/components/UI/InputRadio.vue'
+import ProgressItem from '@/components/UI/ProgressItem.vue'
+
+const countSteps = 4
+const currentStep = ref(1)
+
+const formsData = ref({
+  name: '',
+  email: '',
+  phone: '',
+  company: '',
+  services: [],
+  budget: '1',
+})
 
 const onClickSubmit = (event) => {
-  console.log('onClickSubmit')
+  localStorage.setItem('formsData', JSON.stringify(formsData.value))
 }
 
 const onClickNextStep = (event) => {
-  console.log('onClickNextStep')
+  if (currentStep.value < 4) currentStep.value++
 }
 
 const onClickPreviousStep = (event) => {
-  console.log('onClickPreviousStep')
+  if (currentStep.value > 1) currentStep.value--
 }
 </script>
 
@@ -18,28 +35,17 @@ const onClickPreviousStep = (event) => {
   <div class="container">
     <div class="form">
       <div class="form__progress progress">
-        <div class="progress__item progress__item--complete">
-          <span class="progress__item-index">1</span>
-          <div class="progress__item-bar"></div>
-        </div>
-        <div class="progress__item progress__item--active">
-          <span class="progress__item-index">2</span>
-          <div class="progress__item-bar"></div>
-        </div>
-        <div class="progress__item">
-          <span class="progress__item-index">3</span>
-          <div class="progress__item-bar"></div>
-        </div>
-        <div class="progress__item">
-          <span class="progress__item-index">4</span>
-          <div class="progress__item-bar"></div>
-        </div>
+        <ProgressItem
+          v-for="step in countSteps"
+          :currentStep="currentStep"
+          :step="step"
+        />
       </div>
 
       <hr class="form__divider" />
 
       <!-- step 1 -->
-      <div class="form__content">
+      <div v-show="currentStep == 1" class="form__content">
         <h1 class="form__title">Contact details</h1>
 
         <h2 class="form__subtitle">
@@ -47,35 +53,36 @@ const onClickPreviousStep = (event) => {
         </h2>
 
         <div class="form__items">
-          <div class="form__item">
-            <label class="form__item-label">Name</label>
-            <div class="form__item-input form__item-input--name">
-              <input type="text" placeholder="John Carter" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__item-label">Email</label>
-            <div class="form__item-input form__item-input--email">
-              <input type="text" placeholder="Email address" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__item-label">Phone Number</label>
-            <div class="form__item-input form__item-input--phone">
-              <input type="text" placeholder="(123) 456 - 7890" />
-            </div>
-          </div>
-          <div class="form__item">
-            <label class="form__item-label">Company</label>
-            <div class="form__item-input form__item-input--company">
-              <input type="text" placeholder="Company name" />
-            </div>
-          </div>
+          <InputText
+            v-model="formsData.name"
+            label="Name"
+            icon="name"
+            placeholder="John Carter"
+          />
+
+          <InputText
+            v-model="formsData.email"
+            label="Email"
+            icon="email"
+            placeholder="Email address"
+          />
+          <InputText
+            v-model="formsData.phone"
+            label="Phone Number"
+            icon="phone"
+            placeholder="(123) 456 - 7890"
+          />
+          <InputText
+            v-model="formsData.company"
+            label="Company"
+            icon="company"
+            placeholder="Company name"
+          />
         </div>
       </div>
 
       <!-- step 2 -->
-      <div class="form__content">
+      <div v-show="currentStep == 2" class="form__content">
         <h1 class="form__title">Our services</h1>
 
         <h2 class="form__subtitle">
@@ -83,41 +90,39 @@ const onClickPreviousStep = (event) => {
         </h2>
 
         <div class="form__items">
-          <div class="form__item">
-            <input type="checkbox" name="" id="development" checked />
-            <label
-              for="development"
-              class="form__item-label form__item-label--development"
-              >Development</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="checkbox" name="" id="web_design" />
-            <label
-              for="web_design"
-              class="form__item-label form__item-label--web_design"
-              >Web Design</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="checkbox" name="" id="marketing" />
-            <label
-              for="marketing"
-              class="form__item-label form__item-label--marketing"
-              >Marketing</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="checkbox" name="" id="other" />
-            <label for="other" class="form__item-label form__item-label--other"
-              >Other</label
-            >
-          </div>
+          <InputCheckbox
+            v-model="formsData.services"
+            name="services"
+            value="development"
+            icon="development"
+            label="Development"
+          />
+          <InputCheckbox
+            v-model="formsData.services"
+            name="services"
+            value="web_design"
+            icon="web_design"
+            label="Web Design"
+          />
+          <InputCheckbox
+            v-model="formsData.services"
+            name="services"
+            value="marketing"
+            icon="marketing"
+            label="Marketing"
+          />
+          <InputCheckbox
+            v-model="formsData.services"
+            name="services"
+            value="other"
+            icon="other"
+            label="Other"
+          />
         </div>
       </div>
 
       <!-- step 3 -->
-      <div class="form__content">
+      <div v-show="currentStep == 3" class="form__content">
         <h1 class="form__title">What’s your project budget?</h1>
 
         <h2 class="form__subtitle">
@@ -125,33 +130,35 @@ const onClickPreviousStep = (event) => {
         </h2>
 
         <div class="form__items">
-          <div class="form__item">
-            <input type="radio" name="budget" id="budget1" checked />
-            <label for="budget1" class="form__item-label"
-              >$5.000 - $10.000</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="radio" name="budget" id="budget2" />
-            <label for="budget2" class="form__item-label"
-              >$10.000 - $20.000</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="radio" name="budget" id="budget3" />
-            <label for="budget3" class="form__item-label"
-              >$20.000 - $50.000</label
-            >
-          </div>
-          <div class="form__item">
-            <input type="radio" name="budget" id="budget4" />
-            <label for="budget4" class="form__item-label">$50.000 +</label>
-          </div>
+          <InputRadio
+            v-model="formsData.budget"
+            name="budget"
+            value="1"
+            label="$5.000 - $10.000"
+          />
+          <InputRadio
+            v-model="formsData.budget"
+            name="budget"
+            value="2"
+            label="$10.000 - $20.000"
+          />
+          <InputRadio
+            v-model="formsData.budget"
+            name="budget"
+            value="3"
+            label="$20.000 - $50.000"
+          />
+          <InputRadio
+            v-model="formsData.budget"
+            name="budget"
+            value="4"
+            label="$50.000 +"
+          />
         </div>
       </div>
 
       <!-- step 4 -->
-      <div class="form__content">
+      <div v-show="currentStep == 4" class="form__content">
         <img class="image-ok" src="./assets/images/ok.svg" alt="" />
 
         <h1 class="form__title center">Submit your quote request</h1>
@@ -168,12 +175,92 @@ const onClickPreviousStep = (event) => {
       </div>
     </div>
     <div class="buttons">
-      <BaseButton variant="secondary" @click="onClickPreviousStep"
+      <BaseButton
+        v-show="currentStep > 1"
+        variant="secondary"
+        @click="onClickPreviousStep"
         >Previous step</BaseButton
       >
-      <BaseButton @click="onClickNextStep">Next step</BaseButton>
+      <BaseButton
+        style="margin-left: auto"
+        v-show="currentStep < 4"
+        @click="onClickNextStep"
+        >Next step</BaseButton
+      >
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.form {
+  background-color: white;
+  border: 1px solid #eff0f7;
+  box-shadow: 0px 5px 16px rgba(8, 15, 52, 0.06);
+  border-radius: 34px;
+  width: fit-content;
+  height: fit-content;
+  margin-bottom: 32px;
+  padding: 32px 52px 80px 52px;
+  max-width: 700px;
+}
+
+.progress {
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 18px;
+}
+
+.form__divider {
+  border: none;
+  height: 1px;
+  background-color: var(--neutral-color-400);
+  margin: 0;
+}
+
+.form__content {
+  margin-top: 64px;
+}
+
+.form__title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 35px;
+  color: var(--neutral-color-800);
+}
+
+.form__subtitle {
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 30px;
+  color: var(--neutral-color-600);
+}
+
+.form__items {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 28px;
+  row-gap: 44px;
+}
+
+.form__item {
+  display: grid;
+  row-gap: 18px;
+  width: 284px;
+}
+
+.form__item-label {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--neutral-color-800);
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>
