@@ -44,133 +44,135 @@ const onClickPreviousStep = (event) => {
 
       <hr class="form__divider" />
 
-      <!-- step 1 -->
-      <div v-show="currentStep == 1" class="form__content">
-        <h1 class="form__title">Contact details</h1>
+      <div class="form__steps">
+        <!-- step 1 -->
+        <div v-show="currentStep == 1" class="form__content">
+          <h1 class="form__title">Contact details</h1>
 
-        <h2 class="form__subtitle">
-          Lorem ipsum dolor sit amet consectetur adipisc.
-        </h2>
+          <h2 class="form__subtitle">
+            Lorem ipsum dolor sit amet consectetur adipisc.
+          </h2>
 
-        <div class="form__items">
-          <InputText
-            v-model="formsData.name"
-            label="Name"
-            icon="name"
-            placeholder="John Carter"
-          />
+          <div class="form__items">
+            <InputText
+              v-model="formsData.name"
+              label="Name"
+              icon="name"
+              placeholder="John Carter"
+            />
 
-          <InputText
-            v-model="formsData.email"
-            label="Email"
-            icon="email"
-            placeholder="Email address"
-          />
-          <InputText
-            v-model="formsData.phone"
-            label="Phone Number"
-            icon="phone"
-            placeholder="(123) 456 - 7890"
-          />
-          <InputText
-            v-model="formsData.company"
-            label="Company"
-            icon="company"
-            placeholder="Company name"
-          />
+            <InputText
+              v-model="formsData.email"
+              label="Email"
+              icon="email"
+              placeholder="Email address"
+            />
+            <InputText
+              v-model="formsData.phone"
+              label="Phone Number"
+              icon="phone"
+              placeholder="(123) 456 - 7890"
+            />
+            <InputText
+              v-model="formsData.company"
+              label="Company"
+              icon="company"
+              placeholder="Company name"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- step 2 -->
-      <div v-show="currentStep == 2" class="form__content">
-        <h1 class="form__title">Our services</h1>
+        <!-- step 2 -->
+        <div v-show="currentStep == 2" class="form__content">
+          <h1 class="form__title">Our services</h1>
 
-        <h2 class="form__subtitle">
-          Please select which service you are interested in.
-        </h2>
+          <h2 class="form__subtitle">
+            Please select which service you are interested in.
+          </h2>
 
-        <div class="form__items">
-          <InputCheckbox
-            v-model="formsData.services"
-            name="services"
-            value="development"
-            icon="development"
-            label="Development"
-          />
-          <InputCheckbox
-            v-model="formsData.services"
-            name="services"
-            value="web_design"
-            icon="web_design"
-            label="Web Design"
-          />
-          <InputCheckbox
-            v-model="formsData.services"
-            name="services"
-            value="marketing"
-            icon="marketing"
-            label="Marketing"
-          />
-          <InputCheckbox
-            v-model="formsData.services"
-            name="services"
-            value="other"
-            icon="other"
-            label="Other"
-          />
+          <div class="form__items">
+            <InputCheckbox
+              v-model="formsData.services"
+              name="services"
+              value="development"
+              icon="development"
+              label="Development"
+            />
+            <InputCheckbox
+              v-model="formsData.services"
+              name="services"
+              value="web_design"
+              icon="web_design"
+              label="Web Design"
+            />
+            <InputCheckbox
+              v-model="formsData.services"
+              name="services"
+              value="marketing"
+              icon="marketing"
+              label="Marketing"
+            />
+            <InputCheckbox
+              v-model="formsData.services"
+              name="services"
+              value="other"
+              icon="other"
+              label="Other"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- step 3 -->
-      <div v-show="currentStep == 3" class="form__content">
-        <h1 class="form__title">What’s your project budget?</h1>
+        <!-- step 3 -->
+        <div v-show="currentStep == 3" class="form__content">
+          <h1 class="form__title">What’s your project budget?</h1>
 
-        <h2 class="form__subtitle">
-          Please select the project budget range you have in mind.
-        </h2>
+          <h2 class="form__subtitle">
+            Please select the project budget range you have in mind.
+          </h2>
 
-        <div class="form__items">
-          <InputRadio
-            v-model="formsData.budget"
-            name="budget"
-            value="1"
-            label="$5.000 - $10.000"
-          />
-          <InputRadio
-            v-model="formsData.budget"
-            name="budget"
-            value="2"
-            label="$10.000 - $20.000"
-          />
-          <InputRadio
-            v-model="formsData.budget"
-            name="budget"
-            value="3"
-            label="$20.000 - $50.000"
-          />
-          <InputRadio
-            v-model="formsData.budget"
-            name="budget"
-            value="4"
-            label="$50.000 +"
-          />
+          <div class="form__items">
+            <InputRadio
+              v-model="formsData.budget"
+              name="budget"
+              value="1"
+              label="$5.000 - $10.000"
+            />
+            <InputRadio
+              v-model="formsData.budget"
+              name="budget"
+              value="2"
+              label="$10.000 - $20.000"
+            />
+            <InputRadio
+              v-model="formsData.budget"
+              name="budget"
+              value="3"
+              label="$20.000 - $50.000"
+            />
+            <InputRadio
+              v-model="formsData.budget"
+              name="budget"
+              value="4"
+              label="$50.000 +"
+            />
+          </div>
         </div>
-      </div>
 
-      <!-- step 4 -->
-      <div v-show="currentStep == 4" class="form__content">
-        <img class="image-ok" src="./assets/images/ok.svg" alt="" />
+        <!-- step 4 -->
+        <div v-show="currentStep == 4" class="form__content">
+          <img class="image-ok" src="./assets/images/ok.svg" alt="" />
 
-        <h1 class="form__title center">Submit your quote request</h1>
+          <h1 class="form__title center">Submit your quote request</h1>
 
-        <h2 class="form__subtitle center">
-          Please review all the information you previously typed in the past
-          steps, and if all is okay, submit your message to receive a project
-          quote in 24 - 48 hours.
-        </h2>
+          <h2 class="form__subtitle center">
+            Please review all the information you previously typed in the past
+            steps, and if all is okay, submit your message to receive a project
+            quote in 24 - 48 hours.
+          </h2>
 
-        <div class="wrapper-center">
-          <BaseButton @click="onClickSubmit">Submit</BaseButton>
+          <div class="wrapper-center">
+            <BaseButton @click="onClickSubmit">Submit</BaseButton>
+          </div>
         </div>
       </div>
     </div>
@@ -192,6 +194,19 @@ const onClickPreviousStep = (event) => {
 </template>
 
 <style scoped>
+.container {
+  background-color: #f7f7fb;
+  display: grid;
+  place-content: center;
+  padding-block: 200px;
+}
+
+@media (max-width: 720px) {
+  .container {
+    padding: 16px;
+  }
+}
+
 .form {
   background-color: white;
   border: 1px solid #eff0f7;
@@ -204,6 +219,15 @@ const onClickPreviousStep = (event) => {
   max-width: 700px;
 }
 
+@media (max-width: 720px) {
+  .form {
+    padding: 16px;
+    display: grid;
+    grid-template-columns: 70px 1px 1fr;
+    column-gap: 10px;
+  }
+}
+
 .progress {
   padding: 32px;
   display: flex;
@@ -212,11 +236,31 @@ const onClickPreviousStep = (event) => {
   gap: 18px;
 }
 
+@media (max-width: 720px) {
+  .progress {
+    flex-direction: column;
+    justify-content: center;
+    padding-inline: 0;
+    max-width: 75px;
+  }
+}
+
 .form__divider {
   border: none;
   height: 1px;
   background-color: var(--neutral-color-400);
   margin: 0;
+}
+
+@media (max-width: 720px) {
+  .form__divider {
+    width: 1px;
+    height: 100%;
+  }
+}
+
+.form__steps {
+  padding-inline: 16px;
 }
 
 .form__content {
@@ -245,10 +289,16 @@ const onClickPreviousStep = (event) => {
   row-gap: 44px;
 }
 
+@media (max-width: 720px) {
+  .form__items {
+    grid-template-columns: 1fr;
+  }
+}
+
 .form__item {
   display: grid;
   row-gap: 18px;
-  width: 284px;
+  width: 100%;
 }
 
 .form__item-label {
@@ -262,5 +312,13 @@ const onClickPreviousStep = (event) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+@media (max-width: 400px) {
+  .buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
 }
 </style>

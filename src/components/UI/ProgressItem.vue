@@ -31,12 +31,27 @@ const props = defineProps({
   gap: 18px;
 }
 
+@media (max-width: 720px) {
+  .progress__item {
+    flex-direction: column;
+    /* height: 100%; */
+  }
+}
+
 .progress__item-bar {
   background-color: var(--neutral-color-300);
   border-radius: 40px;
   width: 98px;
   height: 6px;
   display: block;
+}
+
+@media (max-width: 720px) {
+  .progress__item-bar {
+    transform: rotate(90deg);
+    margin-top: 21px;
+    margin-bottom: 21px;
+  }
 }
 
 .progress__item:last-child .progress__item-bar {

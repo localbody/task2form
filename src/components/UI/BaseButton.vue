@@ -31,6 +31,12 @@ const handleClick = (event) => {
   border-radius: 56px;
 }
 
+@media (max-width: 400px) {
+  .button {
+    width: 100%;
+  }
+}
+
 .button--primary {
   border: none;
   font-weight: bold;

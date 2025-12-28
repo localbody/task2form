@@ -33,13 +33,6 @@ img {
   height: 100%;
 }
 
-.container {
-  background-color: #f7f7fb;
-  display: grid;
-  place-content: center;
-  padding-block: 200px;
-}
-
 .center {
   text-align: center;
 }

@@ -58,6 +58,7 @@ input[type='radio'] + label::before {
   background: var(--neutral-color-100);
   border: 1px solid var(--neutral-color-400);
   box-shadow: inset 0px -3px 7px rgba(20, 20, 43, 0.08);
+  flex-shrink: 0;
 }
 
 input[type='radio']:checked + label::before {

@@ -64,6 +64,13 @@ input[type='checkbox'] + label {
   border: 2px solid transparent;
 }
 
+@media (max-width: 400px) {
+  input[type='checkbox'] + label {
+    display: grid;
+    place-items: center;
+  }
+}
+
 input[type='checkbox'] + label::before {
   content: '';
   width: 66px;
