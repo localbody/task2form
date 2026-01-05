@@ -199,6 +199,7 @@ const onClickPreviousStep = (event) => {
   display: grid;
   place-content: center;
   padding-block: 200px;
+  height: 100vh;
 }
 
 @media (max-width: 720px) {
