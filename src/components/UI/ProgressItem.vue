@@ -16,7 +16,7 @@ const props = defineProps({
     class="progress__item"
     :class="{
       'progress__item--complete': currentStep > step,
-      'progress__item--active': currentStep == step,
+      'progress__item--active': currentStep === step,
     }"
   >
     <span class="progress__item-index">{{ step }}</span>

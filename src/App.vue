@@ -1,13 +1,43 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
+
 import BaseButton from '@/components/UI/BaseButton.vue'
 import InputText from '@/components/UI/InputText.vue'
 import InputCheckbox from '@/components/UI/InputCheckbox.vue'
 import InputRadio from '@/components/UI/InputRadio.vue'
 import ProgressItem from '@/components/UI/ProgressItem.vue'
 
-const countSteps = 4
+const COUNT_STEPS = 4
 const currentStep = ref(1)
+
+const isNextDisabled = ref(false)
+
+const listServices = [
+  {
+    name: 'services',
+    value: 'development',
+    icon: 'development',
+    label: 'Development',
+  },
+  {
+    name: 'services',
+    value: 'web_design',
+    icon: 'web_design',
+    label: 'Web Design',
+  },
+  {
+    name: 'services',
+    value: 'marketing',
+    icon: 'marketing',
+    label: 'Marketing',
+  },
+  {
+    name: 'services',
+    value: 'other',
+    icon: 'other',
+    label: 'Other',
+  },
+]
 
 const formsData = ref({
   name: '',
@@ -18,12 +48,54 @@ const formsData = ref({
   budget: '1',
 })
 
+const formsErrors = ref({})
+
+watchEffect(() => {
+  const services = formsData.value.services
+
+  isNextDisabled.value = currentStep.value === 2 && services.length === 0
+})
+
 const onClickSubmit = (event) => {
   localStorage.setItem('formsData', JSON.stringify(formsData.value))
 }
 
 const onClickNextStep = (event) => {
-  if (currentStep.value < 4) currentStep.value++
+  // проверим первый шаг
+  if (currentStep.value === 1) {
+    // check name
+    if (formsData.value.name.length < 2) {
+      formsErrors.value.name = 'enter more than 1 letter'
+    } else {
+      delete formsErrors.value.name
+    }
+
+    // check email
+    const regExpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!regExpEmail.test(formsData.value.email)) {
+      formsErrors.value.email = 'invalid email'
+    } else {
+      delete formsErrors.value.email
+    }
+
+    //check phone
+    const regExpPhone = /^\+[1-9]\d{11}$/ // '+' + 1 цифра + 11 цифр = +XXXXXXXXXXXX
+    if (!regExpPhone.test(formsData.value.phone)) {
+      formsErrors.value.phone = 'invalid phone'
+    } else {
+      delete formsErrors.value.phone
+    }
+
+    // check company
+    if (formsData.value.company.length < 2) {
+      formsErrors.value.company = 'enter more than 1 letter'
+    } else {
+      delete formsErrors.value.company
+    }
+  }
+
+  if (currentStep.value < 4 && Object.keys(formsErrors.value).length === 0)
+    currentStep.value++
 }
 
 const onClickPreviousStep = (event) => {
@@ -36,7 +108,8 @@ const onClickPreviousStep = (event) => {
     <div class="form">
       <div class="form__progress progress">
         <ProgressItem
-          v-for="step in countSteps"
+          v-for="step in COUNT_STEPS"
+          :key="step"
           :currentStep="currentStep"
           :step="step"
         />
@@ -46,7 +119,7 @@ const onClickPreviousStep = (event) => {
 
       <div class="form__steps">
         <!-- step 1 -->
-        <div v-show="currentStep == 1" class="form__content">
+        <div v-show="currentStep === 1" class="form__content">
           <h1 class="form__title">Contact details</h1>
 
           <h2 class="form__subtitle">
@@ -59,6 +132,7 @@ const onClickPreviousStep = (event) => {
               label="Name"
               icon="name"
               placeholder="John Carter"
+              :error="formsErrors.name || ''"
             />
 
             <InputText
@@ -66,24 +140,29 @@ const onClickPreviousStep = (event) => {
               label="Email"
               icon="email"
               placeholder="Email address"
+              :error="formsErrors.email || ''"
             />
+
             <InputText
               v-model="formsData.phone"
               label="Phone Number"
               icon="phone"
-              placeholder="(123) 456 - 7890"
+              placeholder="+XXXXXXXXXXXX"
+              :error="formsErrors.phone || ''"
             />
+
             <InputText
               v-model="formsData.company"
               label="Company"
               icon="company"
               placeholder="Company name"
+              :error="formsErrors.company || ''"
             />
           </div>
         </div>
 
         <!-- step 2 -->
-        <div v-show="currentStep == 2" class="form__content">
+        <div v-show="currentStep === 2" class="form__content">
           <h1 class="form__title">Our services</h1>
 
           <h2 class="form__subtitle">
@@ -92,38 +171,16 @@ const onClickPreviousStep = (event) => {
 
           <div class="form__items">
             <InputCheckbox
+              v-for="item in listServices"
               v-model="formsData.services"
-              name="services"
-              value="development"
-              icon="development"
-              label="Development"
-            />
-            <InputCheckbox
-              v-model="formsData.services"
-              name="services"
-              value="web_design"
-              icon="web_design"
-              label="Web Design"
-            />
-            <InputCheckbox
-              v-model="formsData.services"
-              name="services"
-              value="marketing"
-              icon="marketing"
-              label="Marketing"
-            />
-            <InputCheckbox
-              v-model="formsData.services"
-              name="services"
-              value="other"
-              icon="other"
-              label="Other"
+              :key="item.value"
+              v-bind="item"
             />
           </div>
         </div>
 
         <!-- step 3 -->
-        <div v-show="currentStep == 3" class="form__content">
+        <div v-show="currentStep === 3" class="form__content">
           <h1 class="form__title">What’s your project budget?</h1>
 
           <h2 class="form__subtitle">
@@ -159,7 +216,7 @@ const onClickPreviousStep = (event) => {
         </div>
 
         <!-- step 4 -->
-        <div v-show="currentStep == 4" class="form__content">
+        <div v-show="currentStep === 4" class="form__content">
           <img class="image-ok" src="./assets/images/ok.svg" alt="" />
 
           <h1 class="form__title center">Submit your quote request</h1>
@@ -184,7 +241,8 @@ const onClickPreviousStep = (event) => {
         >Previous step</BaseButton
       >
       <BaseButton
-        style="margin-left: auto"
+        :disabled="isNextDisabled"
+        class="button--align-right"
         v-show="currentStep < 4"
         @click="onClickNextStep"
         >Next step</BaseButton
@@ -294,19 +352,6 @@ const onClickPreviousStep = (event) => {
   .form__items {
     grid-template-columns: 1fr;
   }
-}
-
-.form__item {
-  display: grid;
-  row-gap: 18px;
-  width: 100%;
-}
-
-.form__item-label {
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 20px;
-  color: var(--neutral-color-800);
 }
 
 .buttons {

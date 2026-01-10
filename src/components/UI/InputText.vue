@@ -6,11 +6,18 @@ const props = defineProps({
     type: String,
     default: '',
   },
+
   icon: {
     type: String,
     default: '',
   },
+
   placeholder: {
+    type: String,
+    default: '',
+  },
+
+  error: {
     type: String,
     default: '',
   },
@@ -29,11 +36,33 @@ const emit = defineEmits(['update:modelValue'])
         :value="modelValue"
         @input="emit('update:modelValue', $event.target.value)"
       />
+      <span v-if="error" class="form__item-error">{{ error }}</span>
     </div>
   </div>
 </template>
 
 <style scoped>
+.form__item {
+  display: grid;
+  row-gap: 18px;
+  width: 100%;
+}
+
+.form__item-label {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 20px;
+  color: var(--neutral-color-800);
+}
+
+.form__item-error {
+  position: absolute;
+  bottom: -21px;
+  left: 0;
+  color: tomato;
+  font-size: 13px;
+}
+
 .form__item-input {
   background-color: var(--neutral-color-100);
   border: 1px solid var(--neutral-color-300);
@@ -42,6 +71,7 @@ const emit = defineEmits(['update:modelValue'])
   padding: 22px;
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .form__item-input input[type='text'] {

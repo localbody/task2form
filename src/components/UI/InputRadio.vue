@@ -25,7 +25,7 @@ const emit = defineEmits(['update:modelValue'])
       :name="name"
       :value="value"
       :id="value"
-      :checked="modelValue == value"
+      :checked="modelValue === value"
       @change="emit('update:modelValue', value)"
     />
     <label :for="value" class="form__item-label">{{ label }}</label>

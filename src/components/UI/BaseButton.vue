@@ -37,6 +37,11 @@ const handleClick = (event) => {
   }
 }
 
+.button:disabled {
+  cursor: not-allowed;
+  background-color: var(--neutral-color-400);
+}
+
 .button--primary {
   border: none;
   font-weight: bold;
@@ -50,5 +55,9 @@ const handleClick = (event) => {
   font-weight: normal;
   color: var(--primary-color);
   border: 1px solid var(--primary-color);
+}
+
+.button--align-right {
+  margin-left: auto;
 }
 </style>
