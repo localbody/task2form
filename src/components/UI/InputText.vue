@@ -17,6 +17,11 @@ const props = defineProps({
     default: '',
   },
 
+  isPhone: {
+    type: Boolean,
+    default: false,
+  },
+
   error: {
     type: String,
     default: '',
@@ -29,7 +34,13 @@ const emit = defineEmits(['update:modelValue'])
 <template>
   <div class="form__item">
     <label class="form__item-label">{{ label }}</label>
-    <div :class="['form__item-input', `form__item-input--${icon}`]">
+    <div
+      :class="[
+        'form__item-input',
+        `form__item-input--${icon}`,
+        { 'form__item-input--phone': isPhone },
+      ]"
+    >
       <input
         type="text"
         :placeholder="placeholder"
@@ -57,7 +68,7 @@ const emit = defineEmits(['update:modelValue'])
 
 .form__item-error {
   position: absolute;
-  bottom: -21px;
+  bottom: -18px;
   left: 0;
   color: tomato;
   font-size: 13px;
@@ -70,6 +81,7 @@ const emit = defineEmits(['update:modelValue'])
   border-radius: 46px;
   padding: 22px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   position: relative;
 }
@@ -80,6 +92,11 @@ const emit = defineEmits(['update:modelValue'])
   font-size: 18px;
   line-height: 20px;
   width: 100%;
+}
+
+.form__item-input--phone::before {
+  content: '+';
+  font-size: 18px;
 }
 
 .form__item-input::after {

@@ -71,7 +71,7 @@ const onClickNextStep = (event) => {
     }
 
     // check email
-    const regExpEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const regExpEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     if (!regExpEmail.test(formsData.value.email)) {
       formsErrors.value.email = 'invalid email'
     } else {
@@ -79,7 +79,7 @@ const onClickNextStep = (event) => {
     }
 
     //check phone
-    const regExpPhone = /^\+[1-9]\d{11}$/ // '+' + 1 цифра + 11 цифр = +XXXXXXXXXXXX
+    const regExpPhone = /^[1-9]\d{11}$/ // '+' + 1 цифра + 11 цифр = +XXXXXXXXXXXX
     if (!regExpPhone.test(formsData.value.phone)) {
       formsErrors.value.phone = 'invalid phone'
     } else {
@@ -100,6 +100,12 @@ const onClickNextStep = (event) => {
 
 const onClickPreviousStep = (event) => {
   if (currentStep.value > 1) currentStep.value--
+}
+
+const onInputPhone = (event) => {
+  const value = event.target.value.replace(/\D/g, '').slice(0, 12)
+  event.target.value = value
+  formsData.value.phone = value
 }
 </script>
 
@@ -144,11 +150,13 @@ const onClickPreviousStep = (event) => {
             />
 
             <InputText
+              :isPhone="true"
               v-model="formsData.phone"
               label="Phone Number"
               icon="phone"
-              placeholder="+XXXXXXXXXXXX"
+              placeholder="XXXXXXXXХX"
               :error="formsErrors.phone || ''"
+              @input="onInputPhone"
             />
 
             <InputText
