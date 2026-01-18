@@ -60,38 +60,54 @@ const onClickSubmit = (event) => {
   localStorage.setItem('formsData', JSON.stringify(formsData.value))
 }
 
+const checkPhone = () => {
+  const regExpPhone = /^[1-9]\d{10,11}$/ // '+' + 1 цифра + 11 цифр = +XXXXXXXXXXXX
+  if (!regExpPhone.test(formsData.value.phone)) {
+    formsErrors.value.phone = 'invalid phone'
+  } else {
+    delete formsErrors.value.phone
+  }
+}
+
+const checkEmail = () => {
+  const regExpEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  if (!regExpEmail.test(formsData.value.email)) {
+    formsErrors.value.email = 'invalid email'
+  } else {
+    delete formsErrors.value.email
+  }
+}
+
+const checkCompany = () => {
+  if (formsData.value.company.length < 2) {
+    formsErrors.value.company = 'enter more than 1 letter'
+  } else {
+    delete formsErrors.value.company
+  }
+}
+
+const checkName = () => {
+  if (formsData.value.name.length < 2) {
+    formsErrors.value.name = 'enter more than 1 letter'
+  } else {
+    delete formsErrors.value.name
+  }
+}
+
 const onClickNextStep = (event) => {
   // проверим первый шаг
   if (currentStep.value === 1) {
     // check name
-    if (formsData.value.name.length < 2) {
-      formsErrors.value.name = 'enter more than 1 letter'
-    } else {
-      delete formsErrors.value.name
-    }
+    checkName()
 
     // check email
-    const regExpEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!regExpEmail.test(formsData.value.email)) {
-      formsErrors.value.email = 'invalid email'
-    } else {
-      delete formsErrors.value.email
-    }
+    checkEmail()
 
     //check phone
-    const regExpPhone = /^[1-9]\d{11}$/ // '+' + 1 цифра + 11 цифр = +XXXXXXXXXXXX
-    if (!regExpPhone.test(formsData.value.phone)) {
-      formsErrors.value.phone = 'invalid phone'
-    } else {
-      delete formsErrors.value.phone
-    }
+    checkPhone()
 
     // check company
-    if (formsData.value.company.length < 2) {
-      formsErrors.value.company = 'enter more than 1 letter'
-    } else {
-      delete formsErrors.value.company
-    }
+    checkCompany()
   }
 
   if (currentStep.value < 4 && Object.keys(formsErrors.value).length === 0)
@@ -106,6 +122,8 @@ const onInputPhone = (event) => {
   const value = event.target.value.replace(/\D/g, '').slice(0, 12)
   event.target.value = value
   formsData.value.phone = value
+
+  checkPhone()
 }
 </script>
 
@@ -139,6 +157,7 @@ const onInputPhone = (event) => {
               icon="name"
               placeholder="John Carter"
               :error="formsErrors.name || ''"
+              @input="checkName"
             />
 
             <InputText
@@ -147,6 +166,7 @@ const onInputPhone = (event) => {
               icon="email"
               placeholder="Email address"
               :error="formsErrors.email || ''"
+              @input="checkEmail"
             />
 
             <InputText
@@ -165,6 +185,7 @@ const onInputPhone = (event) => {
               icon="company"
               placeholder="Company name"
               :error="formsErrors.company || ''"
+              @input="checkCompany"
             />
           </div>
         </div>
